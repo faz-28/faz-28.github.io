@@ -3,307 +3,506 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mohamed Fazil — Automation & HMI Engineer</title>
+<title>Mohamed Fazil S — HMI Graphics Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root{
+    --bg:#141414;
+    --bg-panel:#1d1d1d;
+    --panel-border:#333333;
+    --value-box:#4b4b4b;
+    --cyan:#2dd9d9;
+    --cyan-bright:#7af0f0;
+    --yellow:#e9d28a;
+    --text:#e9e9e9;
+    --text-dim:#9a9a9a;
+    --green:#57d672;
+    --red:#ff6b6b;
+    --radius:3px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 40px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0px, rgba(255,255,255,0.025) 1px, transparent 1px, transparent 40px),
+      var(--bg);
+    color:var(--text);
+    font-family:'Inter', sans-serif;
+    line-height:1.6;
+  }
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+  .display{font-family:'Space Grotesk', sans-serif;}
 
-  :root {
-    --bg: #ffffff;
-    --bg2: #f7f6f2;
-    --text: #1a1a1a;
-    --muted: #666660;
-    --hint: #999991;
-    --border: rgba(0,0,0,0.12);
-    --border2: rgba(0,0,0,0.22);
-    --radius: 10px;
-    --radius-lg: 14px;
+  /* ---------- Header / Breadcrumb nav ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(20,20,20,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--panel-border);
   }
-
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --bg: #1c1c1b;
-      --bg2: #252523;
-      --text: #f0ede6;
-      --muted: #aaa89e;
-      --hint: #666660;
-      --border: rgba(255,255,255,0.1);
-      --border2: rgba(255,255,255,0.2);
-    }
+  .nav-wrap{
+    max-width:1080px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    gap:16px;
   }
-
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
+  .brand{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; letter-spacing:0.06em; color:var(--text-dim);
   }
-
-  .container {
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+  .brand span{color:var(--cyan);}
+  nav{display:flex; gap:4px; flex-wrap:wrap;}
+  nav a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.04em;
+    color:var(--text-dim);
+    text-decoration:none;
+    padding:6px 10px;
+    border-radius:var(--radius);
+    border:1px solid transparent;
+    transition:all .15s ease;
   }
-
-  /* NAV */
-  nav {
-    border-bottom: 0.5px solid var(--border);
-    padding: 1rem 0;
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    z-index: 10;
+  nav a:hover, nav a:focus-visible, nav a.active{
+    color:var(--cyan-bright);
+    border-color:var(--panel-border);
+    background:rgba(45,217,217,0.06);
+    outline:none;
   }
-  nav .inner {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    max-width: 720px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
+  .status-pill{
+    display:flex; align-items:center; gap:6px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px; color:var(--green);
+    white-space:nowrap;
   }
-  .nav-name { font-size: 14px; font-weight: 500; }
-  .nav-links { display: flex; gap: 20px; }
-  .nav-links a { font-size: 13px; color: var(--muted); text-decoration: none; }
-  .nav-links a:hover { color: var(--text); }
-
-  /* HERO */
-  .hero { padding: 4rem 0 2.5rem; border-bottom: 0.5px solid var(--border); }
-  .hero-tag {
-    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 1rem;
+  .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--green);
+    box-shadow:0 0 6px var(--green);
+    animation:pulse 2s infinite;
   }
-  .hero-name {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(2.8rem, 8vw, 4.5rem);
-    line-height: 1.05;
-    margin-bottom: 0.6rem;
-  }
-  .hero-title { font-size: 1rem; color: var(--muted); margin-bottom: 1.5rem; }
-  .hero-desc {
-    font-size: 1rem; line-height: 1.75; color: var(--muted);
-    max-width: 560px; margin-bottom: 2rem;
-  }
-  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 2rem; }
-  .tag {
-    font-size: 12px; padding: 5px 13px;
-    border-radius: var(--radius);
-    border: 0.5px solid var(--border2);
-    color: var(--muted);
-  }
-  .tag.hl { background: #E6F1FB; color: #0C447C; border-color: #85B7EB; }
-  @media (prefers-color-scheme: dark) {
-    .tag.hl { background: #0C447C; color: #B5D4F4; border-color: #185FA5; }
-  }
-  .contact-row { display: flex; gap: 10px; flex-wrap: wrap; }
-  .contact-btn {
-    font-family: 'DM Sans', sans-serif; font-size: 13px;
-    padding: 9px 18px; border-radius: var(--radius);
-    border: 0.5px solid var(--border2);
-    background: transparent; color: var(--text);
-    cursor: pointer; display: inline-flex; align-items: center; gap: 7px;
-    text-decoration: none; transition: background 0.15s;
-  }
-  .contact-btn:hover { background: var(--bg2); }
-
-  /* SECTIONS */
-  .section { padding: 2.5rem 0; border-bottom: 0.5px solid var(--border); }
-  .section-label {
-    font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--hint); margin-bottom: 1.5rem;
+  @keyframes pulse{
+    0%,100%{opacity:1;} 50%{opacity:0.35;}
   }
 
-  /* EXPERIENCE */
-  .exp-grid { display: grid; gap: 14px; }
-  .exp-card {
-    background: var(--bg);
-    border: 0.5px solid var(--border);
-    border-radius: var(--radius-lg);
-    padding: 1.35rem;
-    transition: border-color 0.15s;
-  }
-  .exp-card:hover { border-color: var(--border2); }
-  .exp-header {
-    display: flex; align-items: flex-start;
-    justify-content: space-between; gap: 12px; margin-bottom: 4px;
-  }
-  .exp-role { font-size: 15px; font-weight: 500; }
-  .exp-badge {
-    font-size: 11px; padding: 3px 10px;
-    border-radius: 100px; white-space: nowrap; flex-shrink: 0;
-  }
-  .current { background: #E1F5EE; color: #085041; }
-  .past { background: #F1EFE8; color: #444441; }
-  @media (prefers-color-scheme: dark) {
-    .current { background: #085041; color: #9FE1CB; }
-    .past { background: #2C2C2A; color: #B4B2A9; }
-  }
-  .dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: #1D9E75; display: inline-block;
-    margin-right: 5px; animation: pulse 2s infinite;
-  }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .exp-company { font-size: 13px; color: var(--muted); margin-bottom: 0.6rem; }
-  .exp-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+  main{max-width:1080px; margin:0 auto; padding:0 24px;}
 
-  /* SKILLS */
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
-    gap: 10px;
+  /* ---------- Eyebrow tag ---------- */
+  .tag{
+    display:inline-block;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px; letter-spacing:0.08em; color:var(--cyan);
+    border:1px solid rgba(45,217,217,0.35);
+    background:rgba(45,217,217,0.06);
+    padding:3px 9px; border-radius:var(--radius);
+    margin-bottom:14px;
   }
-  .skill-card {
-    background: var(--bg2); border-radius: var(--radius);
-    padding: 0.9rem 1rem;
-    display: flex; align-items: center; gap: 10px;
-  }
-  .skill-card i { font-size: 18px; color: var(--muted); }
-  .skill-name { font-size: 13px; font-weight: 500; }
 
-  /* INTEREST */
-  .interest-card {
-    background: var(--bg2); border-radius: var(--radius-lg);
-    padding: 1.35rem; display: flex; gap: 14px; align-items: flex-start;
+  /* ---------- Hero ---------- */
+  .hero{padding:88px 0 56px;}
+  .hero h1{
+    font-size:clamp(34px,6vw,56px);
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
   }
-  .interest-icon {
-    width: 40px; height: 40px; border-radius: var(--radius);
-    background: #E6F1FB; display: flex; align-items: center;
-    justify-content: center; flex-shrink: 0;
+  .hero .role{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--cyan-bright);
+    font-size:clamp(14px,2vw,17px);
+    letter-spacing:0.03em;
+    margin:0 0 22px;
   }
-  .interest-icon i { font-size: 20px; color: #185FA5; }
-  @media (prefers-color-scheme: dark) {
-    .interest-icon { background: #0C447C; }
-    .interest-icon i { color: #B5D4F4; }
+  .hero p.tagline{
+    max-width:560px; color:var(--text-dim); font-size:16px; margin:0 0 32px;
   }
-  .interest-title { font-size: 14px; font-weight: 500; margin-bottom: 4px; }
-  .interest-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+  .value-row{
+    display:grid; grid-template-columns:repeat(4,1fr); gap:12px; max-width:680px;
+    margin-bottom:36px;
+  }
+  .value-box{
+    background:var(--value-box);
+    border:1px solid #5c5c5c;
+    border-radius:var(--radius);
+    padding:10px 12px;
+  }
+  .value-box .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px; letter-spacing:0.08em; color:var(--yellow);
+    text-transform:uppercase; display:block; margin-bottom:5px;
+  }
+  .value-box .value{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; color:var(--cyan-bright); font-weight:500;
+  }
+  .cta-row{display:flex; gap:12px; flex-wrap:wrap;}
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px; letter-spacing:0.03em;
+    padding:11px 20px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    border:1px solid var(--cyan);
+    color:var(--cyan-bright);
+    background:transparent;
+    transition:all .15s ease;
+    cursor:pointer;
+  }
+  .btn:hover, .btn:focus-visible{background:rgba(45,217,217,0.1); outline:none;}
+  .btn.solid{background:var(--cyan); color:#0c1f1f; border-color:var(--cyan); font-weight:600;}
+  .btn.solid:hover{background:var(--cyan-bright);}
 
-  /* FOOTER */
-  footer {
-    padding: 2rem 0; display: flex; align-items: center;
-    justify-content: space-between; flex-wrap: wrap; gap: 8px;
+  /* ---------- Duct flow signature graphic ---------- */
+  .flow-wrap{margin-top:48px; border:1px solid var(--panel-border); border-radius:6px; background:var(--bg-panel); padding:18px 20px 14px;}
+  .flow-caption{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.08em;
+    color:var(--text-dim); text-transform:uppercase; margin-bottom:6px;
   }
-  footer span { font-size: 12px; color: var(--hint); }
+  .flow-svg{width:100%; height:auto; display:block;}
+  .flow-path{
+    fill:none; stroke:var(--text-dim); stroke-width:2;
+  }
+  .flow-dash{
+    fill:none; stroke:var(--cyan); stroke-width:2;
+    stroke-dasharray:6 10;
+    animation:flow 1.6s linear infinite;
+  }
+  @keyframes flow{ to{ stroke-dashoffset:-32; } }
+  .flow-node circle{ fill:var(--value-box); stroke:#5c5c5c; }
+  .flow-node text{ fill:var(--yellow); font-family:'IBM Plex Mono', monospace; font-size:9px; }
 
-  @media (max-width: 520px) {
-    .hero-name { font-size: 2.4rem; }
-    .nav-links { gap: 14px; }
+  /* ---------- Section shell ---------- */
+  section{padding:64px 0; border-top:1px solid var(--panel-border);}
+  section h2{
+    font-size:26px; margin:0 0 22px;
+  }
+
+  /* ---------- About ---------- */
+  .about-panel{
+    background:var(--bg-panel); border:1px solid var(--panel-border); border-radius:6px;
+    padding:26px 28px; max-width:760px;
+  }
+  .about-panel p{margin:0 0 14px; color:#d4d4d4;}
+  .about-panel p:last-child{margin-bottom:0;}
+
+  /* ---------- Experience / event log ---------- */
+  .log-entry{
+    border:1px solid var(--panel-border); border-radius:6px; background:var(--bg-panel);
+    padding:20px 22px; margin-bottom:16px;
+  }
+  .log-top{
+    display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:8px; margin-bottom:6px;
+  }
+  .log-time{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--cyan);}
+  .log-title{font-size:18px; font-weight:600; margin:2px 0 2px;}
+  .log-meta{font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--text-dim);}
+  .badge{
+    font-family:'IBM Plex Mono', monospace; font-size:10.5px; letter-spacing:0.05em;
+    padding:3px 9px; border-radius:20px; border:1px solid;
+  }
+  .badge.active{color:var(--green); border-color:rgba(87,214,114,0.4); background:rgba(87,214,114,0.08);}
+  .badge.closed{color:var(--text-dim); border-color:var(--panel-border); background:rgba(255,255,255,0.03);}
+  .log-desc{color:#cfcfcf; font-size:15px; margin-top:10px;}
+
+  /* ---------- Skills ---------- */
+  .skill-row{margin-bottom:18px;}
+  .skill-row .cat{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px; letter-spacing:0.06em;
+    color:var(--yellow); margin-bottom:9px; display:block;
+  }
+  .chip-row{display:flex; flex-wrap:wrap; gap:8px;}
+  .chip{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px;
+    background:var(--value-box); border:1px solid #5c5c5c; border-radius:var(--radius);
+    color:var(--cyan-bright); padding:6px 11px;
+  }
+
+  /* ---------- Projects ---------- */
+  .project-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .project-card{
+    border:1px solid var(--panel-border); border-radius:6px; background:var(--bg-panel);
+    padding:22px;
+  }
+  .project-card .ptitle{font-size:17px; font-weight:600; margin:0 0 10px;}
+  .project-card p{color:#cfcfcf; font-size:14.5px; margin:0;}
+  .project-icon{margin-bottom:14px;}
+
+  /* ---------- Certificates ---------- */
+  .cert-row{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:14px 0; border-bottom:1px solid var(--panel-border);
+  }
+  .cert-row:last-child{border-bottom:none;}
+  .cert-name{font-weight:600; font-size:15px;}
+  .cert-issuer{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--text-dim); margin-top:3px;}
+  .cert-link{
+    display:flex; align-items:center; gap:6px;
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--cyan-bright);
+    text-decoration:none; border:1px solid var(--panel-border); padding:6px 11px; border-radius:var(--radius);
+    transition:all .15s ease; white-space:nowrap;
+  }
+  .cert-link:hover, .cert-link:focus-visible{background:rgba(45,217,217,0.08); outline:none;}
+
+  /* ---------- Contact / footer ---------- */
+  footer{padding:60px 0 70px; text-align:center;}
+  footer h2{font-size:26px; margin-bottom:10px;}
+  footer p{color:var(--text-dim); margin:0 0 26px;}
+  .footer-note{
+    margin-top:48px; font-family:'IBM Plex Mono', monospace; font-size:11px; color:#5a5a5a;
+  }
+
+  @media (max-width:680px){
+    .value-row{grid-template-columns:repeat(2,1fr);}
+    .project-grid{grid-template-columns:1fr;}
+    nav{display:none;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
   }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="inner">
-    <span class="nav-name">Mohamed Fazil</span>
-    <div class="nav-links">
+<header>
+  <div class="nav-wrap">
+    <div class="brand">HOME / <span>MOHAMED_FAZIL_S.SYS</span></div>
+    <nav id="nav">
+      <a href="#about">About</a>
       <a href="#experience">Experience</a>
       <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#certificates">Certificates</a>
       <a href="#contact">Contact</a>
-    </div>
+    </nav>
+    <div class="status-pill"><span class="dot"></span>ONLINE</div>
   </div>
-</nav>
+</header>
 
-<div class="container">
+<main>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="hero-tag">Automation & HMI Engineer</div>
-    <h1 class="hero-name">Mohamed<br>Fazil</h1>
-    <p class="hero-title">Industrial Engineer · HMI Graphics Designer · AI Enthusiast</p>
-    <p class="hero-desc">
-      I bridge industrial automation and modern software — designing intuitive HMI screens
-      for global sites while exploring AI and software-driven solutions for smarter manufacturing.
-    </p>
-    <div class="tag-row">
-      <span class="tag hl">PLC</span>
-      <span class="tag hl">HMI</span>
-      <span class="tag hl">SCADA</span>
-      <span class="tag">Siemens</span>
-      <span class="tag">Allen Bradley</span>
-      <span class="tag">Python</span>
-      <span class="tag">Comm Protocols</span>
-      <span class="tag">AI</span>
+  <section class="hero" style="border-top:none;">
+    <div class="tag">[ HMI / BMS ENGINEER ]</div>
+    <h1 class="display">Mohamed Fazil S</h1>
+    <p class="role">HMI GRAPHICS DESIGNER — AUTOMATION &amp; BMS ENGINEER</p>
+    <p class="tagline">I turn client hardware into the screens technicians actually use to run a building — airports, hospitals, commercial towers — wired to live, real-time data.</p>
+
+    <div class="value-row">
+      <div class="value-box"><span class="label">Role</span><span class="value">HMI Designer</span></div>
+      <div class="value-box"><span class="label">Base</span><span class="value">Chennai, IN</span></div>
+      <div class="value-box"><span class="label">Platform</span><span class="value">Honeywell EBI</span></div>
+      <div class="value-box"><span class="label">Status</span><span class="value" style="color:var(--green);">● Active</span></div>
     </div>
-    <div class="contact-row" id="contact">
-      <a class="contact-btn" href="mailto:mohamedfazil981@gmail.com">
-        <i class="ti ti-mail"></i> mohamedfazil981@gmail.com
-      </a>
+
+    <div class="cta-row">
+      <a href="#experience" class="btn solid">View Experience</a>
+      <a href="#contact" class="btn">Contact</a>
+    </div>
+
+  </section>
+
+  <section id="about">
+    <div class="tag">[ ABOUT ]</div>
+    <h2 class="display">Summary</h2>
+    <div class="about-panel">
+      <p>I'm an Automation and BMS engineer building the HMI graphics that let technicians see and control a building from one screen. My current work is on Honeywell Experion PKS / EBI, turning client hardware drawings into live HMIWeb displays for airports, hospitals, and commercial buildings — binding every data point so the screen reflects what's actually happening on site.</p>
+      <p>Before that, I worked PLC and HMI support on the production floor at Schneider Electric, troubleshooting real-time automation issues across Siemens and Allen-Bradley platforms. That's where I learned to care about uptime as much as visuals.</p>
     </div>
   </section>
 
-  <!-- EXPERIENCE -->
-  <section class="section" id="experience">
-    <div class="section-label">Experience</div>
-    <div class="exp-grid">
-      <div class="exp-card">
-        <div class="exp-header">
-          <span class="exp-role">HMI Graphics Designer</span>
-          <span class="exp-badge current"><span class="dot"></span>Current</span>
+  <section id="experience">
+    <div class="tag">[ EXPERIENCE ]</div>
+    <h2 class="display">Event Log</h2>
+
+    <div class="log-entry">
+      <div class="log-top">
+        <div>
+          <div class="log-title">HMI Graphics Designer</div>
+          <div class="log-meta">Honeywell · Chennai</div>
         </div>
-        <div class="exp-company"><i class="ti ti-building" style="font-size:13px;margin-right:4px;vertical-align:-1px"></i>Current Employer</div>
-        <div class="exp-desc">
-          Developing HMI screens for US and UK industrial sites — translating complex automation
-          processes into clear, operator-friendly interfaces. Bridging the gap between PLC logic
-          and effective UI design for mission-critical operations.
+        <div style="text-align:right;">
+          <div class="log-time">04/2026 — PRESENT</div>
+          <span class="badge active">ACTIVE</span>
         </div>
       </div>
-      <div class="exp-card">
-        <div class="exp-header">
-          <span class="exp-role">Automation Engineer</span>
-          <span class="exp-badge past">Previous</span>
+      <p class="log-desc">Translating client hardware inputs into Site HMI graphics for Building Management System (BMS) projects across airports, commercial buildings, and hospitals — enabling technicians to control and monitor building systems. Binding software data points to provide real-time visualization on the HMI screen.</p>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-top">
+        <div>
+          <div class="log-title">Automation Engineer</div>
+          <div class="log-meta">Schneider Electric · Bangalore</div>
         </div>
-        <div class="exp-company"><i class="ti ti-building" style="font-size:13px;margin-right:4px;vertical-align:-1px"></i>Schneider Electric</div>
-        <div class="exp-desc">
-          PLC troubleshooting on live production lines, identifying faults and reducing unplanned
-          downtime. Worked closely with manufacturing teams to improve system reliability and
-          keep production running efficiently.
+        <div style="text-align:right;">
+          <div class="log-time">09/2025 — 04/2026</div>
+          <span class="badge closed">CLOSED</span>
         </div>
+      </div>
+      <p class="log-desc">Provided hands-on support for PLC and HMI-based production lines, troubleshooting real-time automation issues to minimize downtime. Supported server-to-PLC communication over OPC UA, performed breakdown and routine maintenance, and collaborated with production and maintenance teams to keep lines running reliably.</p>
+    </div>
+
+    <div class="log-entry">
+      <div class="log-top">
+        <div>
+          <div class="log-title">IIOT Intern</div>
+          <div class="log-meta">Retech Solution Pvt. Ltd · Chennai</div>
+        </div>
+        <div style="text-align:right;">
+          <span class="badge closed">COMPLETE</span>
+        </div>
+      </div>
+      <p class="log-desc">Focused on the software side of Industrial IoT — data monitoring, visualization, dashboard configuration, and automation integration — and how IIoT solutions tie into real-time monitoring for automation systems.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="tag">[ SKILLS ]</div>
+    <h2 class="display">Tag List</h2>
+
+    <div class="skill-row">
+      <span class="cat">[ BMS / HMI GRAPHICS ]</span>
+      <div class="chip-row">
+        <span class="chip">Honeywell Experion PKS</span>
+        <span class="chip">Enterprise Buildings Integrator (EBI)</span>
+        <span class="chip">HMIWeb Display Builder</span>
+      </div>
+    </div>
+
+    <div class="skill-row">
+      <span class="cat">[ PLC ]</span>
+      <div class="chip-row">
+        <span class="chip">Siemens S7-1200</span>
+        <span class="chip">Allen-Bradley RSLogix 5000</span>
+        <span class="chip">Schneider M580 / M340</span>
+        <span class="chip">Ladder Logic</span>
+      </div>
+    </div>
+
+    <div class="skill-row">
+      <span class="cat">[ HMI / SCADA ]</span>
+      <div class="chip-row">
+        <span class="chip">Siemens WinCC</span>
+        <span class="chip">Delta</span>
+        <span class="chip">InTouch</span>
+      </div>
+    </div>
+
+    <div class="skill-row">
+      <span class="cat">[ PROTOCOLS ]</span>
+      <div class="chip-row">
+        <span class="chip">OPC UA</span>
+        <span class="chip">Modbus</span>
+        <span class="chip">TCP/IP</span>
+        <span class="chip">Ethernet</span>
+      </div>
+    </div>
+
+    <div class="skill-row">
+      <span class="cat">[ TOOLS &amp; PRACTICE ]</span>
+      <div class="chip-row">
+        <span class="chip">AutoCAD</span>
+        <span class="chip">Excel</span>
+        <span class="chip">Documentation</span>
+        <span class="chip">Vendor Coordination</span>
+        <span class="chip">Troubleshooting</span>
+        <span class="chip">Tagging &amp; Alarms</span>
+        <span class="chip">IIOT</span>
       </div>
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section class="section" id="skills">
-    <div class="section-label">Skills & Tools</div>
-    <div class="skills-grid">
-      <div class="skill-card"><i class="ti ti-cpu"></i><span class="skill-name">PLC Programming</span></div>
-      <div class="skill-card"><i class="ti ti-layout-dashboard"></i><span class="skill-name">HMI Design</span></div>
-      <div class="skill-card"><i class="ti ti-topology-star"></i><span class="skill-name">SCADA</span></div>
-      <div class="skill-card"><i class="ti ti-settings"></i><span class="skill-name">Siemens PLC</span></div>
-      <div class="skill-card"><i class="ti ti-settings-2"></i><span class="skill-name">Allen Bradley</span></div>
-      <div class="skill-card"><i class="ti ti-brand-python"></i><span class="skill-name">Python</span></div>
-      <div class="skill-card"><i class="ti ti-network"></i><span class="skill-name">Comm Protocols</span></div>
-      <div class="skill-card"><i class="ti ti-brain"></i><span class="skill-name">AI & Software</span></div>
-      <div class="skill-card"><i class="ti ti-bug"></i><span class="skill-name">Troubleshooting</span></div>
-    </div>
-  </section>
-
-  <!-- INTERESTS -->
-  <section class="section">
-    <div class="section-label">What I'm Working Towards</div>
-    <div class="interest-card">
-      <div class="interest-icon"><i class="ti ti-rocket"></i></div>
-      <div>
-        <div class="interest-title">Software & AI in Industrial Automation</div>
-        <div class="interest-desc">
-          Passionate about applying software thinking and AI to industrial systems —
-          from smarter HMI interfaces to predictive diagnostics. Keen to push automation
-          beyond hardware into intelligent, data-driven solutions.
-        </div>
+  <section id="projects">
+    <div class="tag">[ PROJECTS ]</div>
+    <h2 class="display">Selected Work</h2>
+    <div class="project-grid">
+      <div class="project-card">
+        <svg class="project-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <div class="ptitle">PLC, HMI &amp; SCADA Industrial Automation Training</div>
+        <p>A 3-month hands-on training project covering PLC programming in Ladder Logic, HMI screen development for process control and visualization, and SCADA configuration including tag creation, alarms, and real-time monitoring.</p>
+      </div>
+      <div class="project-card">
+        <svg class="project-icon" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="1.6"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 7h2M11 11h2M11 15h2"/></svg>
+        <div class="ptitle">EV Battery Monitoring System</div>
+        <p>An academic automation project for real-time monitoring and control of EV battery parameters — sensor integration, control logic execution, and data acquisition visualized through a SCADA-style monitoring interface.</p>
       </div>
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer>
-    <span>Mohamed Fazil · Chennai, India</span>
-    <span>mohamedfazil981@gmail.com</span>
+  <section id="certificates">
+    <div class="tag">[ CERTIFICATES ]</div>
+    <h2 class="display">Verified</h2>
+    <div class="about-panel" style="padding:6px 28px;">
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">Introduction to Industry 4.0 and Industrial Internet of Things</div>
+          <div class="cert-issuer">NPTEL</div>
+        </div>
+        <a class="cert-link" href="https://archive.nptel.ac.in/noc/Ecertificate/?q=NPTEL23CS82S64780026720016029" target="_blank" rel="noopener">🔗 Verify</a>
+      </div>
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">Social Innovation in Industry 4.0</div>
+          <div class="cert-issuer">NPTEL</div>
+        </div>
+        <a class="cert-link" href="https://archive.nptel.ac.in/noc/Ecertificate/?q=NPTEL24ME126S105210097003813775" target="_blank" rel="noopener">🔗 Verify</a>
+      </div>
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">IIOT and Automation</div>
+          <div class="cert-issuer">IPCS GLOBAL</div>
+        </div>
+        <a class="cert-link" href="https://ipcsglobal.in/pub/certificate/verification/IPCS_Gbl0868972cd778aa8" target="_blank" rel="noopener">🔗 Verify</a>
+      </div>
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">Learning SCADA</div>
+          <div class="cert-issuer">NPTEL</div>
+        </div>
+        <a class="cert-link" href="https://www.linkedin.com/learning/certificates/d6b39cc14b80b0d156c5ca00652cebd94b9fd5277a41105baa1c1c89447fbe35?trk=share_certificate" target="_blank" rel="noopener">🔗 Verify</a>
+      </div>
+      <div class="cert-row">
+        <div>
+          <div class="cert-name">Certification for Python</div>
+          <div class="cert-issuer">IIT Bombay</div>
+        </div>
+        <a class="cert-link" href="https://drive.google.com/file/d/1m3ZND4PUzok3Kzqi_GF7oWvo6FVA6Vly/view" target="_blank" rel="noopener">🔗 Verify</a>
+      </div>
+    </div>
+  </section>
+
+  <footer id="contact">
+    <div class="tag">[ CONTACT ]</div>
+    <h2 class="display">Let's talk</h2>
+    <p>Open to PLC, HMI, and BMS automation opportunities.</p>
+    <div class="cta-row" style="justify-content:center;">
+      <a href="mailto:mohamedfazil981@gmail.com" class="btn solid">mohamedfazil981@gmail.com</a>
+    </div>
+    <div class="footer-note">CHENNAI, IN &nbsp;·&nbsp; SYSTEM STATUS: ONLINE</div>
   </footer>
 
-</div>
+</main>
+
+<script>
+  // Active nav highlighting via scroll position
+  const sections = document.querySelectorAll('main section, footer');
+  const navLinks = document.querySelectorAll('#nav a');
+  const setActive = () => {
+    let current = '';
+    sections.forEach(sec => {
+      const rect = sec.getBoundingClientRect();
+      if(rect.top <= 120 && rect.bottom >= 120){ current = sec.id; }
+    });
+    navLinks.forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  };
+  document.addEventListener('scroll', setActive, { passive:true });
+  setActive();
+</script>
+
 </body>
 </html>
